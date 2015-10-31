@@ -1,9 +1,10 @@
 package main
 import (
-	//"strconv"
+	"strconv"
 	"fmt"
 	//"google.golang.org/api/bigquery/v2"
 	"net/http"
+	"net/url"
 	"encoding/json"
 )
 
@@ -28,16 +29,56 @@ func getJson(url string, target interface{}) error {
     return json.NewDecoder(r.Body).Decode(target)
 }
 
+type AppConf struct {
+	ArtistName string `json:"artistName`
+	IsGameCenterEnabled bool `json:"isGameCenterEnabled"`
+	TrackId int `json:"trackId"`
+} 
+
+// http://www.apple.com/itunes/affiliates/
+// resources/documentation/itunes-store-web-service-search-api.html
+
+type AppStoreQuery struct {
+	BaseUrl string
+	Limit int
+	Country string
+	Lang string
+	Entity string
+	Term string
+}
+
+var appStoreQuery = AppStoreQuery{
+	BaseUrl: "https://itunes.apple.com/search?",
+	Limit: 5,
+	Country: "us",
+	Lang: "en_us",
+	Entity: "software",
+	Term: "x",
+}
+
+func (query *AppStoreQuery) getUrl() string {	
+	params := url.Values{}
+	params.Add("entity",  query.Entity)
+	params.Add("country", query.Country)
+	params.Add("lang", query.Lang)
+	params.Add("term", query.Term)
+	params.Add("limit", strconv.Itoa(query.Limit))
+
+	return query.BaseUrl + params.Encode()
+}
+
 func main() {
 
     var results Request
 
-    url := "https://itunes.apple.com/search?term=xxx&country=us&entity=software"
+    url := appStoreQuery.getUrl()
+    fmt.Println(url)
+
 	err := getJson(url, &results)
     if err != nil {
     	fmt.Println(err)
         return
     }
-	fmt.Println(results)
+	fmt.Println(results.ResultCount)
     //bigqueryService, err := bigquery.New(oauthHttpClient)
 }

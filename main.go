@@ -8,12 +8,6 @@ import (
 	"encoding/json"
 )
 
-type App struct {
-	ArtistName string `json:"artistName`
-	IsGameCenterEnabled bool `json:"isGameCenterEnabled"`
-	TrackId int `json:"trackId"`
-}
-
 type Request struct {
     ResultCount int `json:"resultCount"`
     Results  []App  `json:"results"`
@@ -49,7 +43,7 @@ type AppStoreQuery struct {
 
 var appStoreQuery = AppStoreQuery{
 	BaseUrl: "https://itunes.apple.com/search?",
-	Limit: 5,
+	Limit: 200,
 	Country: "us",
 	Lang: "en_us",
 	Entity: "software",
@@ -79,6 +73,10 @@ func main() {
     	fmt.Println(err)
         return
     }
-	fmt.Println(results.ResultCount)
+	fmt.Println(results)//.ResultCount)
+
+	for _, value := range results.Results {
+		fmt.Println(value.TrackId)
+	}
     //bigqueryService, err := bigquery.New(oauthHttpClient)
 }

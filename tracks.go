@@ -39,13 +39,10 @@ func (track *Track) load() error {
     return nil
 }
 
-func (track *Track) add(new_tracks []string) {
+func (track *Track) add(new_tracks []string) error {
     track.values = append(track.values, new_tracks...)
 
-    err := track.save(new_tracks)
-    if err != nil {
-      fmt.Println("WriteLines: %s", err)
-    }
+    return track.save(new_tracks)
 }
 
 func (track *Track) save(new_tracks []string) error {

@@ -35,5 +35,9 @@ func main() {
     fmt.Println("Total apps: ", track.size())
 
     new_tracks := parse(track)
-    track.add(new_tracks)
+    err = track.add(new_tracks)
+	if err != nil {
+    	fmt.Println(err)
+        return
+    }
 }

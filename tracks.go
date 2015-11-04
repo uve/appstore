@@ -11,6 +11,7 @@ import (
 type Track struct {
     path string
     values []string
+    db *bqDataset
 }
 
 func (track *Track) setPath(path string) error {
@@ -20,6 +21,12 @@ func (track *Track) setPath(path string) error {
     track.path = path
     return nil
 } 
+
+func (track *Track) setDatabase(db *bqDataset) error {
+    track.db = db
+    return nil
+} 
+
 func (track *Track) getPath() string {
     return track.path
 } 

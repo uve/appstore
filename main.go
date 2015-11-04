@@ -13,19 +13,31 @@ func parse(track Track) []string  {
     request.filter(track.ids())
     fmt.Println("New apps: ", request.size())
 
+    err := track.db.Insert(&request)
+    if err != nil {
+        fmt.Println(err)
+    }
     request.save()
 
     return request.getTrackIds()
 }
+
 
 func main() {
 
 	var track Track
 	err := track.setPath("tracks.csv")
     if err != nil {
-    	fmt.Println(err)
+        fmt.Println(err)
         return
     }
+
+    db, err := connectBigQueryDB()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    err = track.setDatabase(db)
 
 	err = track.load()
 	if err != nil {

@@ -1,0 +1,212 @@
+[
+  {
+    "name": "userRatingCount",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "averageUserRating",
+    "type": "FLOAT",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "trackContentRating",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "trackViewUrl",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "artworkUrl100",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "userRatingCountForCurrentVersion",
+    "type": "FLOAT",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "averageUserRatingForCurrentVersion",
+    "type": "FLOAT",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "contentAdvisoryRating",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "sellerUrl",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "description",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "version",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "price",
+    "type": "FLOAT",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "genres",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "artistName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "artistId",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "artistViewUrl",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "artworkUrl512",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "kind",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "features",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "supportedDevices",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "advisories",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "isGameCenterEnabled",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "IsVppDeviceBasedLicensingEnabled",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "screenshotUrls",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "ipadScreenshotUrls",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "artworkUrl60",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "currency",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "genreIds",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "releaseDate",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "sellerName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "bundleId",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "trackId",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "trackName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "primaryGenreName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "primaryGenreId",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "releaseNotes",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "minimumOsVersion",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "wrapperType",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "formattedPrice",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "trackCensoredName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "languageCodesISO2A",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "fileSizeBytes",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]

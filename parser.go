@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/url"
 	"encoding/json"
+
+	bigquery "google.golang.org/api/bigquery/v2"
 )
 
 type AppRequest struct {
@@ -37,7 +39,7 @@ type AppStoreQuery struct {
 
 var appStoreQuery = AppStoreQuery{
 	BaseUrl: "https://itunes.apple.com/search?",
-	Limit: 25,
+	Limit: 1,
 	Country: "us",
 	Lang: "en_us",
 	Entity: "software",
@@ -91,4 +93,18 @@ func (request *AppRequest) save() {
 
 func (request *AppRequest) size() int {
 	return len(request.Results)
+}
+
+func (app *App) getJson() (map[string]bigquery.JsonValue, error) {
+	b, err := json.Marshal(app)
+    if err != nil {
+        return nil, err
+    }
+
+    var Json map[string]bigquery.JsonValue
+	err = json.Unmarshal(b, &Json)
+    if err != nil {
+        return nil, err
+    }
+	return Json, nil
 }

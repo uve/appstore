@@ -59,14 +59,12 @@ func (query *AppStoreQuery) getUrl() string {
 
 func (request *AppRequest) find() {
 	url := appStoreQuery.getUrl()
-    //fmt.Println(url)
 
 	err := getJson(url, &request)
     if err != nil {
     	fmt.Println(err)
         return
     }
-	//fmt.Println(results.ResultCount)
 }
 
 func (request *AppRequest) filter(tracks []string) {

@@ -1,6 +1,7 @@
 package main
 import (
 	"fmt"
+    "time"
 )
 
 func parse(track Track) []string  {
@@ -24,7 +25,7 @@ func parse(track Track) []string  {
 
 
 func main() {
-
+    time.Local = time.UTC
 	var track Track
 	err := track.setPath("tracks.csv")
     if err != nil {

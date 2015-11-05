@@ -85,43 +85,18 @@ type Person struct {
 
 
 func (ds *bqDataset) Insert(request *AppRequest) error {
-
-  	//jsonRow := make(map[string]bigquery.JsonValue)
-  	rows := make([]*bigquery.TableDataInsertAllRequestRows, request.size() + 1)
+  	rows := make([]*bigquery.TableDataInsertAllRequestRows, request.size())
  
-    for i, value := range request.Results {
-
+    for i, app := range request.Results {
     	rows[i] = new(bigquery.TableDataInsertAllRequestRows)
-    	Json, err := value.getJson()
+    	Json, err := app.getJson()
     	if err != nil {
     		return err
     	}
     	rows[i].Json = Json
-    	//fmt.Println("Json: ", i , rows[i])
     }
 
-    k := request.size()
-	rows[k] = new(bigquery.TableDataInsertAllRequestRows)
-
-	jsonRow := make(map[string]bigquery.JsonValue)
-	jsonRow["trackId"] = bigquery.JsonValue(5)
-	rows[k].Json = jsonRow
-    /*c
-    jsonRow["trackId"] = bigquery.JsonValue(4)
-    jsonRow["age"] = bigquery.JsonValue(person.Age)
-
-    b := []byte(`{"kind": "person", "fullName": "John Doe", "age": 22, "gender": "Male", "phoneNumber": { "areaCode": "206", "number": "1234567"}, "children": [{ "name": "Master", "gender": "Female", "age": "5"}, {"name": "John", "gender": "Male", "age": "15"}], "citiesLived": [{ "place": "Seattle", "yearsLived": ["1995"]}, {"place": "Stockholm", "yearsLived": ["2005"]}]}`)
-	//var f interface{}
-	var Json map[string]bigquery.JsonValue
-	err := json.Unmarshal(b, &Json)
-	*/
-
-    //rows[0] = new(bigquery.TableDataInsertAllRequestRows)
-    //rows[0].Json = Json
-
 	insertRequest := &bigquery.TableDataInsertAllRequest{Rows: rows}
-
-	fmt.Println("insertRequest: ", len(rows))
 	fmt.Println(ds.ProjectId, ds.DatasetId, ds.TableId)
     _, err := ds.bq.Tabledata.InsertAll(ds.ProjectId, ds.DatasetId, ds.TableId, insertRequest).Do()
 	return err
@@ -133,7 +108,6 @@ func connectBigQueryDB() (*bqDataset, error) {
 	projectId := "cometiphrd"
 	datasetId := "october"
 	tableId := "data_test"
-	//tableiId := "langs_test"
 
 	// Use oauth2.NoContext if there isn't a good context to pass in.
     ctx := context.Background()
@@ -146,9 +120,4 @@ func connectBigQueryDB() (*bqDataset, error) {
 	client := oauth2.NewClient(ctx, ts)
 
 	return newBQDataset(client, projectId, datasetId, tableId)
-	/*
-	if err = dataset.ExampleInsert(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return
-	}*/
 }

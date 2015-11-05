@@ -25,7 +25,7 @@ type App struct {
 	Genres []string `json:"genres"`
 	IpadScreenshotUrls []string `json:"ipadScreenshotUrls"`
 	IsGameCenterEnabled bool `json:"isGameCenterEnabled"`
-	IsVppDeviceBasedLicensingEnabled bool `json:"isVppDeviceBasedLicensingEnabled"`
+	//IsVppDeviceBasedLicensingEnabled bool `json:"isVppDeviceBasedLicensingEnabled"`
 	Kind string `json:"kind"`
 	LanguageCodesISO2A []string `json:"languageCodesISO2A"`
 	MinimumOsVersion string `json:"minimumOsVersion"`

@@ -40,7 +40,7 @@ type AppStoreQuery struct {
 
 var appStoreQuery = AppStoreQuery{
 	BaseUrl: "https://itunes.apple.com/search?",
-	Limit: 1,
+	Limit: 200,
 	Country: "us",
 	//Lang: "en_us",
 	Entity: "software",

@@ -106,8 +106,8 @@ func (ds *bqDataset) Insert(request *AppRequest) error {
 func connectBigQueryDB() (*bqDataset, error) {
 
 	projectId := "cometiphrd"
-	datasetId := "october"
-	tableId := "data_test"
+	datasetId := "appstore"//"october"
+	tableId := "data"//"data_test"
 
 	// Use oauth2.NoContext if there isn't a good context to pass in.
     ctx := context.Background()

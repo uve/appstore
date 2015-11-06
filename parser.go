@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"encoding/json"
+	"errors"
 
 	bigquery "google.golang.org/api/bigquery/v2"
 )
@@ -41,7 +42,7 @@ var appStoreQuery = AppStoreQuery{
 	BaseUrl: "https://itunes.apple.com/search?",
 	Limit: 1,
 	Country: "us",
-	Lang: "en_us",
+	//Lang: "en_us",
 	Entity: "software",
 	Term: "x",
 }
@@ -50,21 +51,26 @@ func (query *AppStoreQuery) getUrl() string {
 	params := url.Values{}
 	params.Add("entity",  query.Entity)
 	params.Add("country", query.Country)
-	params.Add("lang", query.Lang)
+	//params.Add("lang", query.Lang)
 	params.Add("term", query.Term)
 	params.Add("limit", strconv.Itoa(query.Limit))
 
 	return query.BaseUrl + params.Encode()
 }
 
-func (request *AppRequest) find() {
+func (request *AppRequest) find() (AppStoreQuery, error) {
+
+	appStoreQuery.Country = getRandomCountry()
+	appStoreQuery.Term = getRandomString()
+
 	url := appStoreQuery.getUrl()
+	//fmt.Println("url: ", url)
 
 	err := getJson(url, &request)
     if err != nil {
-    	fmt.Println(err)
-        return
+        return appStoreQuery, err
     }
+    return appStoreQuery, nil
 }
 
 func (request *AppRequest) filter(tracks []string) {
@@ -85,9 +91,11 @@ func (request *AppRequest) getTrackIds() []string {
     return items
 }
 
+/*
 func (request *AppRequest) save() {
 	fmt.Println("Saved apps: ", request.size())
 }
+*/
 
 func (request *AppRequest) size() int {
 	return len(request.Results)
@@ -106,3 +114,63 @@ func (app *App) getJson() (map[string]bigquery.JsonValue, error) {
     }
 	return Json, nil
 }
+
+
+
+func (track *Track) getApps() error {
+
+    request, err := track.parse()
+    if err != nil {
+        return err
+    }
+
+    err = track.db.Insert(&request)
+    if err != nil {
+        return err
+    }
+
+    ids := request.getTrackIds()
+
+    err = track.add(ids)
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
+
+
+func (track *Track) parse() (AppRequest, error) {
+
+	var request AppRequest
+
+	appStoreQuery, err := request.find()
+	if err != nil {
+		return request, err
+	}
+	//fmt.Println("Parsed apps: ", request.size())
+
+	parsedApps := request.size()
+    request.filter(track.ids())
+    newApps := request.size()
+
+    track.setSize(track.size() + newApps)
+
+	results := fmt.Sprintf("%s,%s,%d,%d,%d", appStoreQuery.Term, appStoreQuery.Country, parsedApps, newApps, track.size())
+
+    if request.size() < 1 {
+        return request, errors.New("No new apps found")
+    }
+
+    str := []string{results} 
+
+    //fmt.Println(str)
+
+  	err = writeLines(str, track.getLogs())
+	if err != nil {
+		return request, err
+	}
+
+    return request, nil
+}
+

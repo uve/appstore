@@ -10,8 +10,10 @@ import (
 
 type Track struct {
     path string
+    logs string
     values []string
     db *bqDataset
+    count int
 }
 
 func (track *Track) setPath(path string) error {
@@ -20,17 +22,28 @@ func (track *Track) setPath(path string) error {
     }
     track.path = path
     return nil
+}
+
+func (track *Track) getPath() string {
+    return track.path
+} 
+
+func (track *Track) setLogs(path string) error {
+    if len(path) == 0 {
+        return errors.New("tracks path can't be empty")
+    }
+    track.logs = path
+    return nil
+} 
+
+func (track *Track) getLogs() string {
+    return track.logs
 } 
 
 func (track *Track) setDatabase(db *bqDataset) error {
     track.db = db
     return nil
 } 
-
-func (track *Track) getPath() string {
-    return track.path
-} 
-
 
 func (track *Track) load() error {
     if len(track.path) == 0 {
@@ -42,6 +55,8 @@ func (track *Track) load() error {
         return err
     }
     track.values = lines
+
+    track.setSize(len(lines))
 
     return nil
 }
@@ -64,9 +79,12 @@ func (track *Track) ids() []string {
 }
 
 func (track *Track) size() int {
-  return len(track.values)
+    return track.count
 }
 
+func (track *Track) setSize(newSize int) {
+    track.count = newSize 
+}
 
 // readLines reads a whole file into memory
 // and returns a slice of its lines.

@@ -4,7 +4,7 @@ import (
 	"log"
 	"container/list"
 	"net/http"
-	"fmt"
+	//"fmt"
     "golang.org/x/net/context"
     "golang.org/x/oauth2"
     "golang.org/x/oauth2/google"
@@ -97,7 +97,7 @@ func (ds *bqDataset) Insert(request *AppRequest) error {
     }
 
 	insertRequest := &bigquery.TableDataInsertAllRequest{Rows: rows}
-	fmt.Println(ds.ProjectId, ds.DatasetId, ds.TableId)
+	//fmt.Println(ds.ProjectId, ds.DatasetId, ds.TableId)
     _, err := ds.bq.Tabledata.InsertAll(ds.ProjectId, ds.DatasetId, ds.TableId, insertRequest).Do()
 	return err
 }
